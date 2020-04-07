@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.MainActivity" android:id="@+id/coordLayout">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay" android:background="@color/colorPrimary"
+            android:id="@+id/appBar">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"/>
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:minHeight="?actionBarSize"
+                    android:padding="@dimen/appbar_padding"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    android:textColor="#FFFFFF" android:shadowColor="#000000" android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0" android:singleLine="false" android:textSize="20sp"/>
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"/>
+            <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" app:srcCompat="@drawable/ic_more_vert_black_24dp"
+                    android:id="@+id/contextMenuButton" android:background="#00FFFFFF"
+                    android:scaleType="center" android:contentDescription="@string/context_menu_button_description"
+                    android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/tabs" android:visibility="visible"
+                app:tabIndicatorColor="@color/colorAccent">
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_browse_name" android:id="@+id/BrowseTab"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_camera_name" android:id="@+id/CameraTab"
+            />
+
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" android:background="#FFFFFF">
+    </androidx.viewpager.widget.ViewPager>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CarRecognitionSystem</string>
+
+    <string name="tab_browse_name">Browse</string>
+    <string name="tab_camera_name">Camera</string>
+
+    <string name="open_image_text">Open picture or video</string>
+    <string name="open_image_button_description">Opens box to choose picture or video to process</string>
+
+    <string name="context_menu_button_description">Opens context menu</string>
+
+    <string name="hello_browse_image_result">Hello browse image result</string>
+    <string name="result_table_header_col1">Car picture</string>
+    <string name="result_table_header_col2">Color</string>
+    <string name="result_table_header_col3">Mark</string>
+    <string name="result_table_header_col4">Car gov number</string>
+
+    <string name="hello_camera">Hello camera</string>
+</resources>
