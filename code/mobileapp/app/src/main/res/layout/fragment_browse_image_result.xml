@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".fragments.BrowseImageResultFragment"
+                                                   android:id="@+id/browseImageResultFragment">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/birLinearLayout"
+            android:orientation="vertical" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp" tools:src="@tools:sample/avatars"
+                android:id="@+id/processedImageView" android:layout_gravity="center"
+                android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/table">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/tableHeaderLayout">
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" android:id="@+id/hdividerH1"
+                        android:background="@android:color/darker_gray"/>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/tableHeaderLayoutCols"
+                >
+                    <TextView
+                            android:text="@string/result_table_header_col1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/hColumn1"
+                            android:layout_weight="0.25"
+                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
+                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
+                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                    <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" android:id="@+id/hDividerV1"
+                            android:background="@android:color/darker_gray" android:layout_weight="0"
+                            android:layout_gravity="center"/>
+                    <TextView
+                            android:text="@string/result_table_header_col2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/hColumn2"
+                            android:layout_weight="0.25"
+                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
+                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
+                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                    <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" android:id="@+id/hDividerV2"
+                            android:background="@android:color/darker_gray" android:layout_weight="0"
+                            android:layout_gravity="center"/>
+                    <TextView
+                            android:text="@string/result_table_header_col3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/hColumn3"
+                            android:layout_weight="0.25"
+                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
+                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
+                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                    <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent" android:id="@+id/hDividerV3"
+                            android:background="@android:color/darker_gray" android:layout_weight="0"
+                            android:layout_gravity="center"/>
+                    <TextView
+                            android:text="@string/result_table_header_col4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/hColumn4"
+                            android:layout_weight="0.25"
+                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
+                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
+                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" android:id="@+id/hdividerH2"
+                        android:background="@android:color/darker_gray"/>
+            </LinearLayout>
+            <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/tableBody"
+                    android:nestedScrollingEnabled="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
