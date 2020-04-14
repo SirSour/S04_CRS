@@ -34,6 +34,8 @@ import com.eltech.CRS.fragments.CameraFragment;
 import com.eltech.CRS.resultStuff.CarInfo;
 import com.eltech.CRS.utils.CameraService;
 import com.eltech.CRS.utils.OpenImageExternalActivity;
+import com.eltech.ImageProcessor.CarRecognizer;
+import com.eltech.ImageProcessor.Recognition;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.FileNotFoundException;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
 
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    private CarRecognizer recognizer = new CarRecognizer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +213,7 @@ public class MainActivity extends AppCompatActivity
     private void recognise(Bitmap image) {
         //TODO ResultBundle resultBundle = CRS.processImage(image)
         //  result bundle to BrowseImageResult.newInstance
+        List<Recognition> recognitions = recognizer.recognizeImage(image, getAssets());
 
         List<CarInfo> carInfoList = new ArrayList<>();
         carInfoList.add(new CarInfo(R.drawable.red_car, "Red", "Mark1", "ABC1"));
