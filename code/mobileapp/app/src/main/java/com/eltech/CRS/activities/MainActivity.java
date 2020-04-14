@@ -211,14 +211,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void recognise(Bitmap image) {
-        //TODO ResultBundle resultBundle = CRS.processImage(image)
-        //  result bundle to BrowseImageResult.newInstance
         List<Recognition> recognitions = recognizer.recognizeImage(image, getAssets());
 
         List<CarInfo> carInfoList = new ArrayList<>();
-        carInfoList.add(new CarInfo(R.drawable.red_car, "Red", "Mark1", "ABC1"));
-        carInfoList.add(new CarInfo(R.drawable.blue_car, "Blue", "Mark2", "ABC2"));
-        carInfoList.add(new CarInfo(R.drawable.purple_car, "Purple", "Mark3", "ABC3"));
+        for (Recognition recognition : recognitions) {
+            carInfoList.add(new CarInfo(recognition.getImagePart(),
+                                        "Color",
+                                        "Mark",
+                                        "ABC",
+                                        recognition.getLocation()));
+        }
 
         viewPagerAdapter.displayResult(this, image, carInfoList);
     }

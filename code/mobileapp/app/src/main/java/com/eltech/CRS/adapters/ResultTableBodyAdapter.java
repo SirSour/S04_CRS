@@ -57,7 +57,7 @@ public class ResultTableBodyAdapter extends BaseAdapter {
         }
 
         CarInfo carInfo = (CarInfo) getItem(position);
-        rowView.getCarPicView().setImageResource(carInfo.getPicResId()); // set image
+        rowView.getCarPicView().setImageBitmap(carInfo.getPicture()); // set image
         rowView.getCarColorView().setText(carInfo.getColor());
         rowView.getCarMarkView().setText(carInfo.getMark());
         rowView.getCarGovNumView().setText(carInfo.getGovNum());
