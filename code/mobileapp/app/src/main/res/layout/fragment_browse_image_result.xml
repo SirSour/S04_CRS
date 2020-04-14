@@ -9,15 +9,15 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/birLinearLayout"
             android:orientation="vertical" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent" android:gravity="top">
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="250dp" tools:src="@tools:sample/avatars"
-                android:id="@+id/processedImageView" android:layout_gravity="center"
+                android:id="@+id/processedImageView" android:layout_gravity="center_horizontal|top"
                 android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
         <LinearLayout
                 android:orientation="vertical"
