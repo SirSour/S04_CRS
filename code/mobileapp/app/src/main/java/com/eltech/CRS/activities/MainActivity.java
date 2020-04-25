@@ -124,8 +124,9 @@ public class MainActivity extends AppCompatActivity
         } catch (FileNotFoundException ignored) {}
     }
     public void onImageChosen(Bitmap image) {
+        Bitmap mutableImage = giveMutableBitmap(image);
+        recognise(mutableImage);
         switchTabToBrowse();
-        recognise(image);
     }
 
     @Override
@@ -305,6 +306,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         return selectedImage;
+    }
+
+    private Bitmap giveMutableBitmap(Bitmap bitmap) {
+        return bitmap.isMutable() ? bitmap : bitmap.copy(Bitmap.Config.ARGB_8888, true);
     }
 
     private void switchTabToBrowse() {

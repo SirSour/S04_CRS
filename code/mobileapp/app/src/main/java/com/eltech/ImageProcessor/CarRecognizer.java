@@ -2,18 +2,15 @@ package com.eltech.ImageProcessor;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.RectF;
-
-import com.eltech.ImageProcessor.util.ImageUtils;
+import android.graphics.*;
 import com.eltech.ImageProcessor.tflite.Classifier;
 import com.eltech.ImageProcessor.tflite.TFLiteObjectDetectionAPIModel;
+import com.eltech.ImageProcessor.util.ImageUtils;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class CarRecognizer extends Activity {
     protected int previewWidth = 0;
@@ -28,6 +25,17 @@ public class CarRecognizer extends Activity {
     // Minimum detection confidence to track a detection.
     private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.625f;
     private static final boolean MAINTAIN_ASPECT = false;
+    private static final int[] recognitionColors = new int[] {
+            Color.RED,
+            Color.GREEN,
+            Color.BLUE,
+            Color.YELLOW,
+            Color.CYAN,
+            Color.MAGENTA,
+            Color.BLACK,
+            Color.GRAY,
+            Color.WHITE
+    };
     private Integer sensorOrientation;
 
     private Classifier detector;
@@ -103,7 +111,24 @@ public class CarRecognizer extends Activity {
                 }
             }
         }
+
+        drawRectanglesOnSourceImage(image, mappedRecognitions);
         return mappedRecognitions;
+    }
+
+    private void drawRectanglesOnSourceImage(Bitmap image, List<Recognition> recognitions) {
+        if(recognitions.isEmpty()) return;
+
+        int paintStrokeScale = image.getHeight()/100;
+        Random random = new Random();
+        Canvas canvas = new Canvas(image);
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(paintStrokeScale);
+        for (Recognition recognition : recognitions) {
+            paint.setColor(recognitionColors[random.nextInt(recognitionColors.length)]);
+            canvas.drawRect(recognition.getLocation(), paint);
+        }
     }
 
     private enum DetectorMode {
