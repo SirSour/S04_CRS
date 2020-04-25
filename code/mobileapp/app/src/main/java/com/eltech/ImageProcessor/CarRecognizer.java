@@ -119,7 +119,9 @@ public class CarRecognizer extends Activity {
     private void drawRectanglesOnSourceImage(Bitmap image, List<Recognition> recognitions) {
         if(recognitions.isEmpty()) return;
 
-        int paintStrokeScale = image.getHeight()/100;
+        int imageHeight = image.getHeight();
+        int imageWidth = image.getWidth();
+        int paintStrokeScale = imageHeight < imageWidth ? imageHeight/100 : imageWidth/100;
         Random random = new Random();
         Canvas canvas = new Canvas(image);
         Paint paint = new Paint();
