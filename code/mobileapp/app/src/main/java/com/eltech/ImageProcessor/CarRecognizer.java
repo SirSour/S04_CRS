@@ -2,6 +2,7 @@ package com.eltech.ImageProcessor;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.graphics.*;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,6 +36,16 @@ public class CarRecognizer extends Activity {
     // Minimum detection confidence to track a detection.
     private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.625f;
     private static final boolean MAINTAIN_ASPECT = false;
+    private static final int[] recognitionColors = new int[] {
+            Color.RED,
+            Color.GREEN,
+            Color.BLUE,
+            Color.YELLOW,
+            Color.CYAN,
+            Color.MAGENTA,
+            Color.GRAY,
+            Color.WHITE
+    };
     private Integer sensorOrientation;
 
     private Classifier detector;
@@ -110,7 +122,26 @@ public class CarRecognizer extends Activity {
                 }
             }
         }
+
+        drawRectanglesOnSourceImage(image, mappedRecognitions);
         return mappedRecognitions;
+    }
+
+    private void drawRectanglesOnSourceImage(Bitmap image, List<Recognition> recognitions) {
+        if(recognitions.isEmpty()) return;
+
+        int imageHeight = image.getHeight();
+        int imageWidth = image.getWidth();
+        int paintStrokeScale = imageHeight < imageWidth ? imageHeight/100 : imageWidth/100;
+        Random random = new Random();
+        Canvas canvas = new Canvas(image);
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(paintStrokeScale);
+        for (Recognition recognition : recognitions) {
+            paint.setColor(recognitionColors[random.nextInt(recognitionColors.length)]);
+            canvas.drawRect(recognition.getLocation(), paint);
+        }
     }
 
     private String getMainColor(Bitmap bitmap) {

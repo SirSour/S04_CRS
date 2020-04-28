@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -130,8 +131,9 @@ public class MainActivity extends AppCompatActivity
         } catch (FileNotFoundException ignored) {}
     }
     public void onImageChosen(Bitmap image) {
+        Bitmap mutableImage = giveMutableBitmap(image);
+        recognise(mutableImage);
         switchTabToBrowse();
-        recognise(image);
     }
 
     @Override
@@ -218,10 +220,10 @@ public class MainActivity extends AppCompatActivity
 
     private void recognise(Bitmap image) {
         List<Recognition> recognitions = recognizer.recognizeImage(image, getAssets());
-
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),
+                                        new Color(), //TODO put color here
                                         recognition.getColor(),
                                         "Mark",
                                         "ABC",
@@ -311,6 +313,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         return selectedImage;
+    }
+
+    private Bitmap giveMutableBitmap(Bitmap bitmap) {
+        return bitmap.isMutable() ? bitmap : bitmap.copy(Bitmap.Config.ARGB_8888, true);
     }
 
     private void switchTabToBrowse() {
