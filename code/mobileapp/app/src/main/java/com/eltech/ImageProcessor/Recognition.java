@@ -30,7 +30,9 @@ public class Recognition {
 
     private Bitmap imagePart;
 
-    private String color;
+    private String colorName;
+
+    private int color;
 
     public Bitmap getImagePart() {
         return imagePart;
@@ -91,11 +93,19 @@ public class Recognition {
         return resultString.trim();
     }
 
-    public String getColor() {
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 }

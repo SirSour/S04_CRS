@@ -3,12 +3,11 @@ package com.eltech.CRS.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.resultStuff.CarInfo;
 import com.eltech.CRS.resultStuff.ResultTableRow;
@@ -72,10 +71,9 @@ public class ResultTableBodyAdapter extends BaseAdapter {
         this.carInfoList = carInfoList;
     }
 
-    private Bitmap makeBitmapFromColor(Color color) {
+    private Bitmap makeBitmapFromColor(int color) {
         Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        bitmap.eraseColor(color.toArgb());
-//        bitmap.eraseColor(Color.argb(255, 255, 0, 0));
+        bitmap.eraseColor(color);
         return bitmap;
     }
 }
