@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
-    private CarRecognizer recognizer = new CarRecognizer();
+    private CarRecognizer recognizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity
                 backCamera.setDeviceOrientation(orientation);
             }
         };
+        recognizer = new CarRecognizer(getAssets());
         orientationEventListener.enable();
     }
 
@@ -219,12 +219,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void recognise(Bitmap image) {
-        List<Recognition> recognitions = recognizer.recognizeImage(image, getAssets());
+        List<Recognition> recognitions = recognizer.recognizeImage(image);
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),
-                                        new Color(), //TODO put color here
                                         recognition.getColor(),
+                                        recognition.getColorName(),
                                         "Mark",
                                         "ABC",
                                         recognition.getLocation()));
