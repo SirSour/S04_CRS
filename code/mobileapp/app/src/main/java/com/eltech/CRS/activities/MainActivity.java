@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -216,6 +217,7 @@ public class MainActivity extends AppCompatActivity
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),
+                                        new Color(), //TODO put color here
                                         "Color",
                                         "Mark",
                                         "ABC",
