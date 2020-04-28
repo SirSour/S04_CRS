@@ -30,6 +30,8 @@ public class Recognition {
 
     private Bitmap imagePart;
 
+    private String color;
+
     public Bitmap getImagePart() {
         return imagePart;
     }
@@ -87,5 +89,13 @@ public class Recognition {
         }
 
         return resultString.trim();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

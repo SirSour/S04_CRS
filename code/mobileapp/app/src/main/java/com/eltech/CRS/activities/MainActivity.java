@@ -11,7 +11,11 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.net.Uri;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.util.Size;
 import android.view.ContextMenu;
@@ -19,6 +23,7 @@ import android.view.MenuItem;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -26,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.adapters.ViewPagerAdapter;
 import com.eltech.CRS.fragments.BrowseImageResultFragment;
@@ -216,7 +222,7 @@ public class MainActivity extends AppCompatActivity
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),
-                                        "Color",
+                                        recognition.getColor(),
                                         "Mark",
                                         "ABC",
                                         recognition.getLocation()));
