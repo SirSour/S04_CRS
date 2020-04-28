@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.eltech.CRS.R;
 import com.eltech.CRS.resultStuff.CarInfo;
 import com.eltech.CRS.resultStuff.ResultTableRow;
@@ -46,10 +44,11 @@ public class ResultTableBodyAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) tableBodyContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.sample_result_table_row, null);
 
-            rowView = new ResultTableRow((ImageView) convertView.findViewById(R.id.carPic),
-                                         (TextView) convertView.findViewById(R.id.carColor),
-                                         (TextView) convertView.findViewById(R.id.carMark),
-                                         (TextView) convertView.findViewById(R.id.carGovNum)
+            rowView = new ResultTableRow(convertView.findViewById(R.id.carPic),
+                                         convertView.findViewById(R.id.carColorVisual),
+                                         convertView.findViewById(R.id.carColor),
+                                         convertView.findViewById(R.id.carMark),
+                                         convertView.findViewById(R.id.carGovNum)
             );
             convertView.setTag(rowView);
         } else {
@@ -57,7 +56,8 @@ public class ResultTableBodyAdapter extends BaseAdapter {
         }
 
         CarInfo carInfo = (CarInfo) getItem(position);
-        rowView.getCarPicView().setImageBitmap(carInfo.getPicture()); // set image
+        rowView.getCarPicView().setImageBitmap(carInfo.getPicture());
+//        rowView.getCarColorVisualView().setImageBitmap(carInfo.getColor());
         rowView.getCarColorView().setText(carInfo.getColor());
         rowView.getCarMarkView().setText(carInfo.getMark());
         rowView.getCarGovNumView().setText(carInfo.getGovNum());

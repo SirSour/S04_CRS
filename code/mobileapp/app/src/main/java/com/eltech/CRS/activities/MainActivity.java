@@ -213,7 +213,6 @@ public class MainActivity extends AppCompatActivity
 
     private void recognise(Bitmap image) {
         List<Recognition> recognitions = recognizer.recognizeImage(image, getAssets());
-
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),
