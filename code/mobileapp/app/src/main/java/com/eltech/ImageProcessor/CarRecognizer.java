@@ -40,7 +40,6 @@ public class CarRecognizer extends Activity {
             Color.YELLOW,
             Color.CYAN,
             Color.MAGENTA,
-            Color.GRAY,
             Color.WHITE
     };
 

@@ -225,8 +225,6 @@ public class MainActivity extends AppCompatActivity
             carInfoList.add(new CarInfo(recognition.getImagePart(),
                                         recognition.getColor(),
                                         recognition.getColorName(),
-                                        "Mark",
-                                        "ABC",
                                         recognition.getLocation()));
         }
 
