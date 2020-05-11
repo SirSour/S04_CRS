@@ -18,10 +18,7 @@ import android.os.HandlerThread;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.util.Size;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.OrientationEventListener;
-import android.view.View;
+import android.view.*;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -207,6 +204,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public CameraService getBackCamera() {
         return backCamera;
+    }
+
+    public CarRecognizer getRecognizer() {
+        return recognizer;
     }
 
     @Override

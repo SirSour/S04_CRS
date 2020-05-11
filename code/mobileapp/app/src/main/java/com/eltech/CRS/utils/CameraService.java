@@ -164,7 +164,7 @@ public class CameraService {
         mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, null);
 
         SurfaceTexture texture = mImageView.getSurfaceTexture();
-        texture.setDefaultBufferSize(CAMERA_WIDTH,CAMERA_HEIGHT);
+        texture.setDefaultBufferSize(CAMERA_WIDTH, CAMERA_HEIGHT);
         Surface surface = new Surface(texture);
 
         try {
