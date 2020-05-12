@@ -54,7 +54,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return browseTabFragment;
             case 1:
                 //Camera stuff
-                return CameraFragment.newInstance();
+                return CameraFragment.newInstance(mainActivity);
             default:
                 throw new RuntimeException("Unexpected position");
         }
