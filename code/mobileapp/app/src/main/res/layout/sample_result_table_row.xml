@@ -1,8 +1,9 @@
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="75dp" android:orientation="vertical" android:id="@+id/resultTableRow">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:orientation="vertical"
+    android:id="@+id/resultTableRow">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -14,19 +15,20 @@
                 android:layout_marginTop="5dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
         <View
                 android:layout_width="1dp"
-                android:layout_height="40dp" android:id="@+id/dividerV1"
+                android:layout_height="50dp" android:id="@+id/dividerV1"
                 android:background="@android:color/darker_gray" android:layout_weight="0"
                 android:layout_gravity="center"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="0.25">
+                android:layout_height="match_parent" android:layout_weight="0.25" android:id="@+id/colorBlock">
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" tools:srcCompat="@tools:sample/avatars[3]"
                     android:id="@+id/carColorVisual"
                     android:layout_gravity="center" android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp" android:layout_marginLeft="5dp" android:layout_weight="1"/>
+                    android:layout_marginTop="5dp" android:layout_marginLeft="10dp" android:layout_weight="1"
+            />
             <TextView
                     android:text="@string/result_table_header_col2"
                     android:layout_width="match_parent"
@@ -34,28 +36,6 @@
                     android:layout_gravity="center" android:gravity="center" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
         </LinearLayout>
-        <View
-                android:layout_width="1dp"
-                android:layout_height="40dp" android:id="@+id/dividerV2"
-                android:background="@android:color/darker_gray" android:layout_weight="0"
-                android:layout_gravity="center"/>
-        <TextView
-                android:text="@string/result_table_header_col3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/carMark" android:layout_weight="0.25"
-                android:layout_gravity="center" android:gravity="center" android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
-        <View
-                android:layout_width="1dp"
-                android:layout_height="40dp" android:id="@+id/dividerV3"
-                android:background="@android:color/darker_gray" android:layout_weight="0"
-                android:layout_gravity="center"/>
-        <TextView
-                android:text="@string/result_table_header_col4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/carGovNum" android:layout_weight="0.25"
-                android:layout_gravity="center" android:gravity="center" android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
     </LinearLayout>
     <View
             android:layout_width="match_parent"

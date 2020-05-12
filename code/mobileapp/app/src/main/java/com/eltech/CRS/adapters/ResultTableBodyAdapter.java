@@ -15,6 +15,9 @@ import com.eltech.CRS.resultStuff.ResultTableRow;
 import java.util.List;
 
 public class ResultTableBodyAdapter extends BaseAdapter {
+    private static final int CAR_COLOR_VISUAL_HEIGHT = 250;
+    private static final int CAR_COLOR_VISUAL_WIDTH = 250;
+
     private Context tableBodyContext;
     private List<CarInfo> carInfoList;
 
@@ -48,9 +51,7 @@ public class ResultTableBodyAdapter extends BaseAdapter {
 
             rowView = new ResultTableRow(convertView.findViewById(R.id.carPic),
                                          convertView.findViewById(R.id.carColorVisual),
-                                         convertView.findViewById(R.id.carColor),
-                                         convertView.findViewById(R.id.carMark),
-                                         convertView.findViewById(R.id.carGovNum)
+                                         convertView.findViewById(R.id.carColor)
             );
             convertView.setTag(rowView);
         } else {
@@ -61,8 +62,6 @@ public class ResultTableBodyAdapter extends BaseAdapter {
         rowView.getCarPicView().setImageBitmap(carInfo.getPicture());
         rowView.getCarColorVisualView().setImageBitmap(makeBitmapFromColor(carInfo.getColor()));
         rowView.getCarColorView().setText(carInfo.getColorText());
-        rowView.getCarMarkView().setText(carInfo.getMark());
-        rowView.getCarGovNumView().setText(carInfo.getGovNum());
 
         return convertView;
     }
@@ -72,7 +71,7 @@ public class ResultTableBodyAdapter extends BaseAdapter {
     }
 
     private Bitmap makeBitmapFromColor(int color) {
-        Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(CAR_COLOR_VISUAL_WIDTH, CAR_COLOR_VISUAL_HEIGHT, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(color);
         return bitmap;
     }
