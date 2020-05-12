@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.media.Image;
 import android.os.Bundle;
+import androidx.renderscript.RenderScript;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +26,10 @@ import com.otaliastudios.cameraview.CameraView;
 import com.otaliastudios.cameraview.PictureResult;
 import com.otaliastudios.cameraview.controls.Engine;
 import com.otaliastudios.cameraview.controls.Mode;
+import io.github.silvaren.easyrs.tools.Nv21Image;
 
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class CameraFragment extends Fragment {
@@ -86,14 +89,32 @@ public class CameraFragment extends Fragment {
                 return;
             }
             Log.i(MainActivity.LOG_TAG, "data.length - " + data.length);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inMutable = true;
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap resultBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-            Log.i(MainActivity.LOG_TAG, "result bitmap - " + resultBitmap);
-            List<Recognition> recognitions = mainActivity.getRecognizer()
-                                                         .recognizeImage(resultBitmap);
-            Log.i(MainActivity.LOG_TAG, "recognition size - " + recognitions.size());
+            if(frame.getFormat() == ImageFormat.NV21) {
+                RenderScript rs = RenderScript.create(mainActivity);
+                Bitmap resultBitmap = Nv21Image.nv21ToBitmap(rs, data, frame.getSize().getWidth(), frame.getSize().getHeight());
+                Log.i(MainActivity.LOG_TAG, "result bitmap - " + resultBitmap);
+                List<Recognition> recognitions = mainActivity.getRecognizer()
+                                                             .recognizeImage(resultBitmap);
+                Log.i(MainActivity.LOG_TAG, "recognition size - " + recognitions.size());
+                Nv21Image nv21ResultImage = Nv21Image.bitmapToNV21(rs, resultBitmap);
+                Log.i(MainActivity.LOG_TAG, "nv21ResImage.length - " + nv21ResultImage.nv21ByteArray.length);
+                try {
+                    Field mData = frame.getClass().getDeclaredField("mData");
+                    mData.setAccessible(true);
+                    mData.set(frame, nv21ResultImage.nv21ByteArray);
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inMutable = true;
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap resultBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+                Log.i(MainActivity.LOG_TAG, "result bitmap - " + resultBitmap);
+                List<Recognition> recognitions = mainActivity.getRecognizer()
+                                                             .recognizeImage(resultBitmap);
+                Log.i(MainActivity.LOG_TAG, "recognition size - " + recognitions.size());
+            }
         });*/
 
         ImageButton shotButton = view.findViewById(R.id.shotButton);
