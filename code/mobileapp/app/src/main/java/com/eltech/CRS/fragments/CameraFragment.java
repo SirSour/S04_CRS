@@ -1,13 +1,7 @@
 package com.eltech.CRS.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.ImageFormat;
-import android.media.Image;
 import android.os.Bundle;
-import androidx.renderscript.RenderScript;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,18 +13,10 @@ import androidx.fragment.app.Fragment;
 import com.eltech.CRS.R;
 import com.eltech.CRS.activities.MainActivity;
 import com.eltech.CRS.utils.CameraService;
-import com.eltech.ImageProcessor.Recognition;
 import com.otaliastudios.cameraview.CameraListener;
-import com.otaliastudios.cameraview.CameraOptions;
 import com.otaliastudios.cameraview.CameraView;
 import com.otaliastudios.cameraview.PictureResult;
-import com.otaliastudios.cameraview.controls.Engine;
 import com.otaliastudios.cameraview.controls.Mode;
-import io.github.silvaren.easyrs.tools.Nv21Image;
-
-import java.io.ByteArrayInputStream;
-import java.lang.reflect.Field;
-import java.util.List;
 
 public class CameraFragment extends Fragment {
     private CameraView camera;
