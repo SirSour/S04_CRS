@@ -101,11 +101,16 @@ public class CarRecognizer extends Activity {
             }
         }
 
-        drawRectanglesOnSourceImage(image, mappedRecognitions);
         return mappedRecognitions;
     }
 
-    private void drawRectanglesOnSourceImage(Bitmap image, List<Recognition> recognitions) {
+    public List<Recognition> recognizeImageAndVisualise(Bitmap image) {
+        List<Recognition> recognitions = recognizeImage(image);
+        drawRectsOnImage(image, recognitions);
+        return recognitions;
+    }
+
+    public void drawRectsOnImage(Bitmap image, List<Recognition> recognitions) {
         if (recognitions.isEmpty()) return;
 
         int imageHeight = image.getHeight();
@@ -120,6 +125,9 @@ public class CarRecognizer extends Activity {
             paint.setColor(recognitionColors[random.nextInt(recognitionColors.length)]);
             canvas.drawRect(recognition.getLocation(), paint);
         }
+
+//        paint.setColor(Color.GREEN);
+//        canvas.drawRect(new RectF(imageWidth/4, imageHeight/4, imageWidth*3/4, imageHeight*3/4), paint);
     }
 
     private void processColor(Bitmap bitmap, Recognition result) {

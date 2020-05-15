@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void recognise(Bitmap image) {
-        List<Recognition> recognitions = recognizer.recognizeImage(image);
+        List<Recognition> recognitions = recognizer.recognizeImageAndVisualise(image);
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),

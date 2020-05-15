@@ -7,25 +7,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.eltech.CRS.R;
 import com.eltech.CRS.activities.MainActivity;
 import com.eltech.CRS.utils.CameraService;
+import com.eltech.CRS.utils.OwnFrameProcessor;
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraView;
 import com.otaliastudios.cameraview.PictureResult;
 import com.otaliastudios.cameraview.controls.Mode;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class CameraFragment extends Fragment {
     private CameraView camera;
     private MainActivity mainActivity;
+    private OwnFrameProcessor frameProcessor;
+    private Lock mutex;
+    private float currentZoom;
 
     private CameraFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        mutex = new ReentrantLock(true);
     }
 
     public static CameraFragment newInstance(MainActivity mainActivity) {
@@ -56,39 +64,39 @@ public class CameraFragment extends Fragment {
             @Override
             public void onPictureTaken(@NonNull PictureResult result) {
                 result.toBitmap(bitmap -> mainActivity.onImageChosen(bitmap));
+                mutex.unlock();
+                camera.addFrameProcessor(frameProcessor);
             }
         });
-        camera.setFrameProcessingFormat(ImageFormat.JPEG);
-        /*camera.addFrameProcessor(frame -> {
-            byte[] data;
-            Log.i(MainActivity.LOG_TAG, "current camera engine is " + camera.getEngine());
-            Log.i(MainActivity.LOG_TAG, "frame format " + frame.getFormat());
-            if (frame.getDataClass() == Image.class) {
-                Log.i(MainActivity.LOG_TAG, "it's android.media.image");
-                Image image = frame.getData();
-                data = image.getPlanes()[0]
-                        .getBuffer()
-                        .array();
-                Log.i(MainActivity.LOG_TAG, "image planes - " + image.getPlanes().length);
-            } else if (frame.getDataClass() == byte[].class) {
-                Log.i(MainActivity.LOG_TAG, "it's byte[]");
-                data = frame.getData();
-            } else {
-                return;
-            }
-            Log.i(MainActivity.LOG_TAG, "data.length - " + data.length);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inMutable = true;
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap resultBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-            Log.i(MainActivity.LOG_TAG, "result bitmap - " + resultBitmap);
-            List<Recognition> recognitions = mainActivity.getRecognizer()
-                                                         .recognizeImage(resultBitmap);
-            Log.i(MainActivity.LOG_TAG, "recognition size - " + recognitions.size());
-        });*/
+        camera.setFrameProcessingFormat(ImageFormat.YUV_420_888);
+        ImageView overlay = view.findViewById(R.id.overlay);
+        frameProcessor = new OwnFrameProcessor(mainActivity, overlay, mutex);
+        camera.addFrameProcessor(frameProcessor);
+        currentZoom = camera.getZoom();
 
         ImageButton shotButton = view.findViewById(R.id.shotButton);
-        shotButton.setOnClickListener(v -> camera.takePicture());
+        shotButton.setOnClickListener(v -> {
+            camera.clearFrameProcessors();
+            mutex.lock();
+            camera.takePicture();
+        });
+
+        ImageButton incZoomButton = view.findViewById(R.id.incZoom);
+        incZoomButton.setOnClickListener(v -> incrementZoom());
+        ImageButton decZoomButton = view.findViewById(R.id.decZoom);
+        decZoomButton.setOnClickListener(v -> decrementZoom());
+    }
+
+    private void incrementZoom() {
+        if(currentZoom + 0.1 > 1) return;
+        currentZoom += 0.1;
+        camera.setZoom(currentZoom);
+    }
+
+    private void decrementZoom() {
+        if(currentZoom - 0.1 < 0) return;
+        currentZoom -= 0.1;
+        camera.setZoom(currentZoom);
     }
 
     public interface OnFragmentInteractionListener {
