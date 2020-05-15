@@ -141,108 +141,112 @@ public class CarRecognizer extends Activity {
             for (int j = (int) (height * 0.3); j < (int) (height * 0.7); j++) {
                 int pixel = bitmap.getPixel(i, j);
                 int r = ((pixel >> 16) & 0xff);
-                int g = ((pixel >>  8) & 0xff);
-                int b = ((pixel      ) & 0xff);
+                int g = ((pixel >> 8) & 0xff);
+                int b = ((pixel) & 0xff);
                 redSum += r;
                 greenSum += g;
                 blueSum += b;
+            }
+        }
 
-                String col = null;
+        int r = (int) (redSum / (width * height * 0.16));
+        int g = (int) (greenSum / (width * height * 0.16));
+        int b = (int) (blueSum / (width * height * 0.16));
 
-                //0 128 192 255
-                if (r <= 96) { //00
-                    if (g <= 96) { //00
-                        if (b <= 96) { //00
-                            col = "Black";
-                        } else if (b > 96 && b < 170) { // 80
-                            col = "Navy";
-                        } else if (b > 170) { // ff
-                            col = "Blue";
-                        }
-                    } else if (g > 96 && g < 170) { // 80
-                        if (b <= 96) { //00
-                            col = "Green";
-                        }
-                    } else if (g > 210) { // ff
-                        if (b <= 96) { //00
-                            col = "Lime";
-                        } else if (b > 210) { // ff
-                            col = "Aqua";
-                        }
-                    }
-                } else if (r > 96 && r < 170) { // 80
-                    if (g <= 96) { //00
-                        if (b <= 96) { //00
-                            col = "Maroon";
-                        } else if (b > 96 && b < 170) { // 80
-                            col = "Purple";
-                        }
-                    } else if (g > 96 && g < 170) { // 80
-                        if (b <= 96) { //00
-                            col = "Olive";
-                        } else if (b > 96 && b < 170) { // 80
-                            col = "Gray";
-                        }
-                    }
-                } else if (r > 210) { // ff
-                    if (g <= 96) { //00
-                        if (b <= 96) { //00
-                            col = "Red";
-                        } else if (b > 210) { // ff
-                            col = "Fuchsia";
-                        }
-                    } else if (g > 210) { // ff
-                        if (b <= 96) { //00
-                            col = "Yellow";
-                        } else if (b > 210) { // ff
-                            col = "White";
-                        }
-                    }
-                } else {  //c0
-                    if (g < 210 && g > 170) {  //c0
-                        if (b > 170 && b < 210) {  //c0
-                            col = "Silver";
-                        }
-                    }
+        String col = null;
+
+        //0 128 192 255
+        if (r <= 96) { //00
+            if (g <= 96) { //00
+                if (b <= 96) { //00
+                    col = "Black";
+                } else if (b > 96 && b < 170) { // 80
+                    col = "Navy";
+                } else if (b > 170) { // ff
+                    col = "Blue";
                 }
-
-                if (col == null) {
-                    if (r > 128) {
-                        if (g > 128) {
-                            if (b > 128) col = "White";    //111
-                            else col = "Yellow";                  //110
-                        } else {
-                            if (b > 128) col = "Magenta";  //101
-                            else col = "Red";                     //100
-                        }
-                    } else {
-                        if (g > 128) {
-                            if (b > 128) col = "Cyan";     //011
-                            else col = "Green";                   //010
-                        } else {
-                            if (b > 128) col = "Blue";     //001
-                            else col = "Black";                   //000
-                        }
-                    }
+            } else if (g > 96 && g < 170) { // 80
+                if (b <= 96) { //00
+                    col = "Green";
                 }
-                if (colors.containsKey(col)) {
-                    colors.put(col, colors.get(col) + 1);
+            } else if (g > 210) { // ff
+                if (b <= 96) { //00
+                    col = "Lime";
+                } else if (b > 210) { // ff
+                    col = "Aqua";
+                }
+            }
+        } else if (r > 96 && r < 170) { // 80
+            if (g <= 96) { //00
+                if (b <= 96) { //00
+                    col = "Maroon";
+                } else if (b > 96 && b < 170) { // 80
+                    col = "Purple";
+                }
+            } else if (g > 96 && g < 170) { // 80
+                if (b <= 96) { //00
+                    col = "Olive";
+                } else if (b > 96 && b < 170) { // 80
+                    col = "Gray";
+                }
+            }
+        } else if (r > 210) { // ff
+            if (g <= 96) { //00
+                if (b <= 96) { //00
+                    col = "Red";
+                } else if (b > 210) { // ff
+                    col = "Fuchsia";
+                }
+            } else if (g > 210) { // ff
+                if (b <= 96) { //00
+                    col = "Yellow";
+                } else if (b > 210) { // ff
+                    col = "White";
+                }
+            }
+        } else {  //c0
+            if (g < 210 && g > 170) {  //c0
+                if (b > 170 && b < 210) {  //c0
+                    col = "Silver";
+                }
+            }
+        }
+
+        if (col == null) {
+            if (r > 128) {
+                if (g > 128) {
+                    if (b > 128) col = "White";    //111
+                    else col = "Yellow";                  //110
                 } else {
-                    colors.put(col, 1);
+                    if (b > 128) col = "Magenta";  //101
+                    else col = "Red";                     //100
+                }
+            } else {
+                if (g > 128) {
+                    if (b > 128) col = "Cyan";     //011
+                    else col = "Green";                   //010
+                } else {
+                    if (b > 128) col = "Blue";     //001
+                    else col = "Black";                   //000
                 }
             }
         }
+//        if (colors.containsKey(col)) {
+//            colors.put(col, colors.get(col) + 1);
+//        } else {
+//            colors.put(col, 1);
+//        }
 
-        Map.Entry<String, Integer> res = null;
-        for (Map.Entry<String, Integer> colo : colors.entrySet()){
-            if (res == null) {
-                res = colo;
-            } else if (res.getValue() < colo.getValue()){
-                res = colo;
-            }
-        }
-        result.setColorName(res.getKey());
-        result.setColor(Color.argb(255, (int)(redSum / (width * height * 0.16)), (int)(greenSum / (width * height * 0.16)), (int)(blueSum / (width * height * 0.16))));
+//        Map.Entry<String, Integer> res = null;
+//        for (Map.Entry<String, Integer> colo : colors.entrySet()){
+//            if (res == null) {
+//                res = colo;
+//            } else if (res.getValue() < colo.getValue()){
+//                res = colo;
+//            }
+//        }
+        result.setColorName(col);
+        result.setColor(Color.argb(255, r, g, b));
     }
 
     private enum DetectorMode {
