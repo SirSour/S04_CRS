@@ -36,7 +36,7 @@ public class OwnFrameProcessor implements FrameProcessor {
         mutex.lock();
         try {
 //            Log.i(MainActivity.LOG_TAG, "frame format " + frame.getFormat());
-            Log.i(MainActivity.LOG_TAG, "rotation to view: " + frame.getRotationToView());
+//            Log.i(MainActivity.LOG_TAG, "rotation to view: " + frame.getRotationToView());
             if (overlayBitmap == null) {
                 currentOverlayBitmapOrientation = frame.getRotationToUser();
                 overlayBitmap = initOverlayBitmap(frame.getSize().getHeight(), frame.getSize().getWidth());
@@ -48,16 +48,19 @@ public class OwnFrameProcessor implements FrameProcessor {
 
 
             overlayBitmap.eraseColor(Color.TRANSPARENT);
-//            rotateOverlayBitmap(frame.getRotationToUser());
-//            int rotationToView = frame.getRotationToView();
+            rotateOverlayBitmap(frame.getRotationToUser());
+            int imageViewRotate = frame.getRotationToView()-currentOverlayBitmapOrientation;
+            int ivr = imageViewRotate < 0 ? 360 + imageViewRotate : imageViewRotate;
+            Log.i(MainActivity.LOG_TAG, "imageViewRotate: " + imageViewRotate + ", ivr: " + ivr);
             mainActivity.getRecognizer()
                         .drawRectsOnImage(overlayBitmap, recognitions);
             mainActivity.runOnUiThread(() -> {
+                overlay.setRotation(ivr);
                 overlay.setImageBitmap(overlayBitmap);
 //                Matrix matrix = new Matrix();
-//                matrix.postRotate(rotationToView,
-//                                  overlay.getDrawable().getBounds().width()/2,
-//                                  overlay.getDrawable().getBounds().height()/2);
+//                matrix.setRotate(ivr,
+//                                  overlay.getPivotY(),
+//                                  overlay.getPivotX());
 //                overlay.setImageMatrix(matrix);
             });
         } finally {

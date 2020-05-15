@@ -125,7 +125,7 @@ public class CarRecognizer extends Activity {
             paint.setColor(recognitionColors[random.nextInt(recognitionColors.length)]);
             canvas.drawRect(recognition.getLocation(), paint);
         }
-//
+
 //        paint.setColor(Color.GREEN);
 //        canvas.drawRect(new RectF(imageWidth/4, imageHeight/4, imageWidth*3/4, imageHeight*3/4), paint);
     }

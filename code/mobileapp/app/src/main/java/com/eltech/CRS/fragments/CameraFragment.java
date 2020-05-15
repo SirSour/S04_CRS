@@ -70,7 +70,6 @@ public class CameraFragment extends Fragment {
         });
         camera.setFrameProcessingFormat(ImageFormat.YUV_420_888);
         ImageView overlay = view.findViewById(R.id.overlay);
-//        overlay.setScaleType(ImageView.ScaleType.MATRIX);
         frameProcessor = new OwnFrameProcessor(mainActivity, overlay, mutex);
         camera.addFrameProcessor(frameProcessor);
         currentZoom = camera.getZoom();
