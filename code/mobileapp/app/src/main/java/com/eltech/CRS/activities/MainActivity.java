@@ -10,11 +10,13 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.adapters.ViewPagerAdapter;
 import com.eltech.CRS.fragments.BrowseImageResultFragment;
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void recognise(Bitmap image) {
-        List<Recognition> recognitions = recognizer.recognizeImage(image);
+        List<Recognition> recognitions = recognizer.recognizeImageAndVisualise(image);
         List<CarInfo> carInfoList = new ArrayList<>();
         for (Recognition recognition : recognitions) {
             carInfoList.add(new CarInfo(recognition.getImagePart(),

@@ -2,12 +2,14 @@ package com.eltech.CRS.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.activities.MainActivity;
 import com.eltech.CRS.fragments.BrowseImageResultFragment;

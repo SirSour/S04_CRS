@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.resultStuff.CarInfo;
 import com.eltech.CRS.resultStuff.ResultTableRow;
