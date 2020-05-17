@@ -6,7 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
-import android.hardware.camera2.*;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.TotalCaptureResult;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
@@ -15,7 +21,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
+
 import androidx.annotation.NonNull;
+
 import com.eltech.CRS.activities.MainActivity;
 
 import java.io.File;
@@ -164,7 +172,7 @@ public class CameraService {
         mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, null);
 
         SurfaceTexture texture = mImageView.getSurfaceTexture();
-        texture.setDefaultBufferSize(CAMERA_WIDTH,CAMERA_HEIGHT);
+        texture.setDefaultBufferSize(CAMERA_WIDTH, CAMERA_HEIGHT);
         Surface surface = new Surface(texture);
 
         try {

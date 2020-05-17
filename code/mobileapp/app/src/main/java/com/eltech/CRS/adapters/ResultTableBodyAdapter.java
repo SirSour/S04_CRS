@@ -2,12 +2,12 @@ package com.eltech.CRS.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 import com.eltech.CRS.R;
 import com.eltech.CRS.resultStuff.CarInfo;
 import com.eltech.CRS.resultStuff.ResultTableRow;
@@ -15,6 +15,9 @@ import com.eltech.CRS.resultStuff.ResultTableRow;
 import java.util.List;
 
 public class ResultTableBodyAdapter extends BaseAdapter {
+    private static final int CAR_COLOR_VISUAL_HEIGHT = 250;
+    private static final int CAR_COLOR_VISUAL_WIDTH = 250;
+
     private Context tableBodyContext;
     private List<CarInfo> carInfoList;
 
@@ -46,10 +49,9 @@ public class ResultTableBodyAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) tableBodyContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.sample_result_table_row, null);
 
-            rowView = new ResultTableRow((ImageView) convertView.findViewById(R.id.carPic),
-                                         (TextView) convertView.findViewById(R.id.carColor),
-                                         (TextView) convertView.findViewById(R.id.carMark),
-                                         (TextView) convertView.findViewById(R.id.carGovNum)
+            rowView = new ResultTableRow(convertView.findViewById(R.id.carPic),
+                                         convertView.findViewById(R.id.carColorVisual),
+                                         convertView.findViewById(R.id.carColor)
             );
             convertView.setTag(rowView);
         } else {
@@ -57,15 +59,20 @@ public class ResultTableBodyAdapter extends BaseAdapter {
         }
 
         CarInfo carInfo = (CarInfo) getItem(position);
-        rowView.getCarPicView().setImageResource(carInfo.getPicResId()); // set image
-        rowView.getCarColorView().setText(carInfo.getColor());
-        rowView.getCarMarkView().setText(carInfo.getMark());
-        rowView.getCarGovNumView().setText(carInfo.getGovNum());
+        rowView.getCarPicView().setImageBitmap(carInfo.getPicture());
+        rowView.getCarColorVisualView().setImageBitmap(makeBitmapFromColor(carInfo.getColor()));
+        rowView.getCarColorView().setText(carInfo.getColorText());
 
         return convertView;
     }
 
     public void setCarInfoList(List<CarInfo> carInfoList) {
         this.carInfoList = carInfoList;
+    }
+
+    private Bitmap makeBitmapFromColor(int color) {
+        Bitmap bitmap = Bitmap.createBitmap(CAR_COLOR_VISUAL_WIDTH, CAR_COLOR_VISUAL_HEIGHT, Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(color);
+        return bitmap;
     }
 }

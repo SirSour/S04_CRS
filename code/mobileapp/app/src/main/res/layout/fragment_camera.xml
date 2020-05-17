@@ -5,18 +5,31 @@
                                                    android:layout_height="match_parent"
                                                    tools:context=".fragments.CameraFragment" android:id="@+id/cameraLayout">
 
-    <TextureView
-            android:id="@+id/textureView"
+    <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/cameraView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="3:4"
-    />
+            app:cameraPictureSizeMinWidth="360"
+            app:cameraPictureSizeMinHeight="480"
+            app:cameraPictureSizeMaxWidth="1200"
+            app:cameraPictureSizeMaxHeight="1600"
+            app:cameraPictureSizeAspectRatio="3:4"
+            app:cameraAudio="off"
+            app:cameraPlaySounds="false"
+            app:cameraEngine="camera2"
+    >
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/overlay" android:background="#00FFFFFF"
+                android:scaleType="center"/>
+    </com.otaliastudios.cameraview.CameraView>
     <View
             android:layout_width="wrap_content"
-            android:layout_height="0dp" android:id="@+id/view" app:layout_constraintTop_toBottomOf="@id/textureView"
+            android:layout_height="0dp" android:id="@+id/view" app:layout_constraintTop_toBottomOf="@id/cameraView"
             app:layout_constraintBottom_toTopOf="@id/bottomBar" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:background="@android:color/black"/>
     <LinearLayout
@@ -40,6 +53,29 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
+            <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:id="@+id/incZoom" android:layout_weight="1"
+                    android:background="@drawable/ic_add_black_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginTop="10dp" android:layout_marginBottom="10dp"
+                    android:layout_gravity="clip_vertical" app:layout_constraintHorizontal_bias="0.94"/>
+            <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:id="@+id/decZoom" android:layout_weight="1"
+                    android:background="@drawable/ic_remove_black_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginTop="10dp" android:layout_marginBottom="10dp"
+                    android:layout_gravity="clip_vertical" app:layout_constraintHorizontal_bias="0.79"
+                    android:backgroundTint="#AFAFAF"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

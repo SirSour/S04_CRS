@@ -1,28 +1,31 @@
 package com.eltech.CRS.resultStuff;
 
+import android.graphics.Bitmap;
+import android.graphics.RectF;
+
 public class CarInfo {
-    private int picResId; //TODO for the first demo it uses pics in resource; change to bitmap/image/whatever on CRM ready
-    private String color;
-    private String mark;
-    private String govNum;
+    private Bitmap picture;
+    private int color;
+    private String colorText;
+    private RectF location;
 
-    public CarInfo(int pic, String color, String mark, String govNum) {
-        this.picResId = pic;
+    public CarInfo(Bitmap picture, int color, String colorText, RectF location) {
+        this.picture = picture;
         this.color = color;
-        this.mark = mark;
-        this.govNum = govNum;
+        this.colorText = colorText;
+        this.location = location;
     }
 
-    public int getPicResId() {
-        return picResId;
+    public Bitmap getPicture() {
+        return picture;
     }
-    public String getColor() {
+    public int getColor() {
         return color;
     }
-    public String getMark() {
-        return mark;
+    public String getColorText() {
+        return colorText;
     }
-    public String getGovNum() {
-        return govNum;
+    public RectF getLocation() {
+        return location;
     }
 }

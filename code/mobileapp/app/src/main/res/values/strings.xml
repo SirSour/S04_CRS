@@ -4,8 +4,8 @@
     <string name="tab_browse_name">Browse</string>
     <string name="tab_camera_name">Camera</string>
 
-    <string name="open_image_text">Open picture or video</string>
-    <string name="open_image_button_description">Opens box to choose picture or video to process</string>
+    <string name="open_image_text">Tap to open image</string>
+    <string name="open_image_button_description">Opens box to choose image to process</string>
 
     <string name="context_menu_button_description">Opens context menu</string>
 

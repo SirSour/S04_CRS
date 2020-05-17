@@ -9,16 +9,25 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/birLinearLayout"
             android:orientation="vertical" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        <ImageView
+            app:layout_constraintBottom_toBottomOf="parent" android:gravity="top">
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp" tools:src="@tools:sample/avatars"
-                android:id="@+id/processedImageView" android:layout_gravity="center"
-                android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" tools:src="@tools:sample/avatars"
+                    android:id="@+id/processedImageView" android:layout_gravity="center_horizontal|top"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="4:3"
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -53,32 +62,6 @@
                             android:text="@string/result_table_header_col2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/hColumn2"
-                            android:layout_weight="0.25"
-                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
-                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
-                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
-                    <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent" android:id="@+id/hDividerV2"
-                            android:background="@android:color/darker_gray" android:layout_weight="0"
-                            android:layout_gravity="center"/>
-                    <TextView
-                            android:text="@string/result_table_header_col3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/hColumn3"
-                            android:layout_weight="0.25"
-                            android:textStyle="bold" android:textSize="18sp" android:gravity="center"
-                            android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"
-                            android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
-                    <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent" android:id="@+id/hDividerV3"
-                            android:background="@android:color/darker_gray" android:layout_weight="0"
-                            android:layout_gravity="center"/>
-                    <TextView
-                            android:text="@string/result_table_header_col4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/hColumn4"
                             android:layout_weight="0.25"
                             android:textStyle="bold" android:textSize="18sp" android:gravity="center"
                             android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_gravity="center"

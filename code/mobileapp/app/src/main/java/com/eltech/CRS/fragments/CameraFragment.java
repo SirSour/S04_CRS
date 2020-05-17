@@ -1,29 +1,48 @@
 package com.eltech.CRS.fragments;
 
-import android.graphics.SurfaceTexture;
+import android.graphics.ImageFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.eltech.CRS.R;
+import com.eltech.CRS.activities.MainActivity;
 import com.eltech.CRS.utils.CameraService;
+import com.eltech.CRS.utils.OwnFrameProcessor;
+import com.otaliastudios.cameraview.CameraListener;
+import com.otaliastudios.cameraview.CameraView;
+import com.otaliastudios.cameraview.PictureResult;
+import com.otaliastudios.cameraview.controls.Mode;
 
-public class CameraFragment extends Fragment implements TextureView.SurfaceTextureListener {
-    private OnFragmentInteractionListener listener;
-    private CameraService backCamera;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 
-    public static CameraFragment newInstance() {
-        return new CameraFragment();
+public class CameraFragment extends Fragment {
+    private CameraView camera;
+    private MainActivity mainActivity;
+    private OwnFrameProcessor frameProcessor;
+    private Lock mutex;
+    private float currentZoom;
+
+    private CameraFragment(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+        mutex = new ReentrantLock(true);
+    }
+
+    public static CameraFragment newInstance(MainActivity mainActivity) {
+        return new CameraFragment(mainActivity);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        backCamera = listener.getBackCamera();
     }
 
     @Override
@@ -32,50 +51,55 @@ public class CameraFragment extends Fragment implements TextureView.SurfaceTextu
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_camera, container, false);
 
-        TextureView textureView = root.findViewById(R.id.textureView);
-        textureView.setSurfaceTextureListener(this);
-
-        backCamera.setImageView(textureView);
-
-        ImageButton shotButton = root.findViewById(R.id.shotButton);
-        shotButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backCamera.makePhoto();
-            }
-        });
-
-        listener.requestStartBackgroundThread();
         return root;
     }
 
-    public void setOnFragmentInteractionListener(OnFragmentInteractionListener listener) {
-        this.listener = listener;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        camera = view.findViewById(R.id.cameraView);
+        Log.i(MainActivity.LOG_TAG, "current camera engine is " + camera.getEngine());
+        camera.setMode(Mode.PICTURE);
+        camera.setLifecycleOwner(getViewLifecycleOwner());
+        camera.addCameraListener(new CameraListener() {
+            @Override
+            public void onPictureTaken(@NonNull PictureResult result) {
+                result.toBitmap(bitmap -> mainActivity.onImageChosen(bitmap));
+                mutex.unlock();
+                camera.addFrameProcessor(frameProcessor);
+            }
+        });
+        camera.setFrameProcessingFormat(ImageFormat.YUV_420_888);
+        ImageView overlay = view.findViewById(R.id.overlay);
+        frameProcessor = new OwnFrameProcessor(mainActivity, overlay, mutex);
+        camera.addFrameProcessor(frameProcessor);
+        currentZoom = camera.getZoom();
+
+        ImageButton shotButton = view.findViewById(R.id.shotButton);
+        shotButton.setOnClickListener(v -> {
+            camera.clearFrameProcessors();
+            mutex.lock();
+            camera.takePicture();
+        });
+
+        ImageButton incZoomButton = view.findViewById(R.id.incZoom);
+        incZoomButton.setOnClickListener(v -> incrementZoom());
+        ImageButton decZoomButton = view.findViewById(R.id.decZoom);
+        decZoomButton.setOnClickListener(v -> decrementZoom());
     }
 
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        backCamera.openCamera();
+    private void incrementZoom() {
+        if(currentZoom + 0.1 > 1) return;
+        currentZoom += 0.1;
+        camera.setZoom(currentZoom);
     }
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return false;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+    private void decrementZoom() {
+        if(currentZoom - 0.1 < 0) return;
+        currentZoom -= 0.1;
+        camera.setZoom(currentZoom);
     }
 
     public interface OnFragmentInteractionListener {
         CameraService getBackCamera();
-        void requestStartBackgroundThread();
-        void requestStopBackgroundThread();
     }
 }
